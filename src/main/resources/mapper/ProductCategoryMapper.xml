@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cookie.dao.ProductCategoryMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.cookie.dto.ProductCategoryDTO" >
+        <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+        <result column="category_type" property="categoryType" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        category_id, category_name, category_type, create_time, update_time
+    </sql>
+
+    <select id="selectByCategoryType" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT <include refid="Base_Column_List" />
+         FROM `product_category` WHERE category_type = #{categoryType}
+    </select>
+
+
+    <insert id="insertByMap"  parameterType="com.cookie.pojo.ProductCategory" >
+         insert into product_category (category_name, category_type, create_time, update_time
+          )
+          values (#{categoryName}, #{categoryType}, #{createTime}, #{updateTime}
+          )
+    </insert>
+
+
+    <insert id="insertByObject"  parameterType="com.cookie.pojo.ProductCategory" >
+        insert into product_category (category_name, category_type, create_time, update_time
+        )
+        values (#{categoryName}, #{categoryType}, #{createTime}, #{updateTime}
+        )
+    </insert>
+
+    <select id="findByCategoryType" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT <include refid="Base_Column_List" />
+        FROM `product_category` WHERE category_type = #{categoryType}
+    </select>
+
+    <update id="updateByCategoryType">
+          update product_category
+          set category_name = #{categoryName}
+          where category_type = #{categoryType}
+    </update>
+
+    <delete id="deleteByCategoryType" parameterType="Integer">
+        delete from product_category where category_type = #{category_type}
+    </delete>
+
+
+</mapper>
