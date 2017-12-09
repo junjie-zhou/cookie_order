@@ -14,11 +14,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @MapperScan(basePackages = "com.cookie.dao")
 //@ComponentScans({@ComponentScan("com.cookie")})
 public class CookieApplication {
-
-
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(CookieApplication.class, args);
     }
