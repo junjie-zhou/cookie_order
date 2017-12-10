@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cookie.dao.OrderMasterMapper">
 
+<<<<<<< Updated upstream
     <resultMap id="BaseResultMap"   type="com.cookie.dto.OrderMasterDTO">
+=======
+    <resultMap id="BaseResultMap" type="com.cookie.dto.OrderMasterDTO" >
+>>>>>>> Stashed changes
         <result column="order_id" property="orderId" jdbcType="VARCHAR" />
         <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
         <result column="buyer_phone" property="buyerPhone" jdbcType="VARCHAR" />
@@ -16,6 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
+<<<<<<< Updated upstream
     order_id, buyer_name, buyer_phone, buyer_address, buyer_openid, order_amount, order_status,
     pay_status, create_time, update_time
   </sql>
@@ -87,5 +92,69 @@
     </delete>
 
 
+=======
+        order_id, buyer_name, buyer_phone, buyer_address, buyer_openid, order_amount, order_status,
+        pay_status, create_time, update_time
+    </sql>
+
+    <select id="findByBuyerOpenId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.OrderMaster">
+        select <include refid="Base_Column_List"/>
+        from order_master
+        where buyer_openid=#{buyerOpenid}
+    </select>
+
+    <select id="findByOrderId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.OrderMaster">
+        select <include refid="Base_Column_List"/>
+        from order_master
+        where order_id=#{orderId}
+    </select>
+
+    <insert id="insert" parameterType="com.cookie.pojo.OrderMaster" >
+        insert into order_master (order_id, buyer_name, buyer_phone, buyer_address,
+        buyer_openid, order_amount, order_status, pay_status,
+        create_time, update_time)
+        values (#{orderId}, #{buyerName}, #{buyerPhone}, #{buyerAddress},#{buyerOpenid},
+        #{orderAmount}, #{orderStatus}, #{payStatus},#{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateByOrderId" parameterType="com.cookie.pojo.OrderMaster">
+        update order_master
+        <set>
+            <if test="buyerName != null">
+                buyer_name=#{orderId},
+            </if>
+            <if test="buyerPhone != null">
+                buyer_phone=#{buyerPhone},
+            </if>
+            <if test="buyerAddress != null">
+                buyer_address=#{buyerAddress},
+            </if>
+            <if test="buyerOpenid != null">
+                buyer_openid=#{buyerOpenid},
+            </if>
+            <if test="orderAmount != null">
+                order_amount=#{orderAmount},
+            </if>
+            <if test="orderStatus != null">
+                order_status=#{orderStatus},
+            </if>
+            <if test="payStatus != null">
+                pay_status=#{payStatus},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        where order_id=#{orderId}
+    </update>
+
+    <delete id="delectByOrderId" parameterType="com.cookie.pojo.OrderMaster">
+        delete from order_master where order_id=#{orderId}
+    </delete>
+
+    <delete id="deleteByBuyerOpenId" parameterType="com.cookie.pojo.OrderMaster">
+        delete from order_master where buyer_openid=#{buyerOpenid}
+    </delete>
+>>>>>>> Stashed changes
 
 </mapper>

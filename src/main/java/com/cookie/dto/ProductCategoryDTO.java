@@ -20,7 +20,5 @@ public class ProductCategoryDTO {
 
     private Date updateTime;
 
-    public ProductCategoryDTO() {
-    }
 
 }
