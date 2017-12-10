@@ -1,14 +1,15 @@
-package com.cookie.pojo;
+package com.cookie.dto;
 
 import com.cookie.enums.ProductStatus;
 import com.cookie.utils.EnumUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 @ToString
-public class ProductInfo {
+public class ProductInfoDTO {
 
 
     private String productId;
@@ -31,22 +32,7 @@ public class ProductInfo {
 
     private Date updateTime;
 
-    public ProductInfo() {
-    }
-
-    public ProductInfo(String productId, String productName, Integer productStock, BigDecimal productPrice,
-                       String productDescription, String productIcon, Integer productStatus, Integer categoryType,
-                       Date createTime, Date updateTime) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productStock = productStock;
-        this.productPrice = productPrice;
-        this.productDescription = productDescription;
-        this.productIcon = productIcon;
-        this.productStatus = productStatus;
-        this.categoryType = categoryType;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
+    public ProductInfoDTO() {
     }
 
     @JsonIgnore

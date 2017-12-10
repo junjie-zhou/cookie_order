@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cookie.dao.ProductInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.cookie.dto.ProductInfoDTO" >
+        <result column="product_id" property="productId" jdbcType="VARCHAR" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <result column="product_price" property="productPrice" jdbcType="DECIMAL" />
+        <result column="product_stock" property="productStock" jdbcType="INTEGER" />
+        <result column="product_description" property="productDescription" jdbcType="VARCHAR" />
+        <result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
+        <result column="product_status" property="productStatus" jdbcType="TINYINT" />
+        <result column="category_type" property="categoryType" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        product_id, product_name, product_price, product_stock, product_description, product_icon,
+        product_status, category_type, create_time, update_time
+    </sql>
+
+    <select id="getProductInfoByProductId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductInfo">
+        select <include refid="Base_Column_List"/>
+        from product_info
+        where product_id=#{productId}
+    </select>
+
+    <select id="getProductInfoListByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductInfo" >
+        select <include refid="Base_Column_List"/>
+        from product_info
+        where category_type=#{categoryType}
+    </select>
+
+    <insert id="addProductInfo" parameterType="com.cookie.pojo.ProductInfo">
+        insert into product_info (product_id, product_name, product_price, product_stock, 
+        product_description, product_icon, product_status, category_type,
+        create_time, update_time)
+        values (#{productId}, #{productName}, #{productPrice}, #{productStock}, #{productDescription},
+        #{productIcon}, #{productStatus}, #{categoryType},  #{createTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateProductInfo" parameterType="com.cookie.pojo.ProductInfo">
+          update product_info
+          <trim prefix="set" suffixOverrides=",">
+              <if test="productName!=null">
+                  product_name=#{productName},
+              </if>
+              <if test="productPrice!=null">
+                  product_price=#{productPrice},
+              </if>
+              <if test="productStock!=null">
+                  product_stock=#{productStock},
+              </if>
+              <if test="productDescription!=null">
+                  product_description=#{productDescription},
+              </if>
+              <if test="productIcon!=null">
+                  product_icon=#{productIcon},
+              </if>
+              <if test="productStatus!=null">
+                  product_status=#{productStatus},
+              </if>
+              <if test="categoryType!=null">
+                  category_type=#{categoryType},
+              </if>
+              <if test="createTime!=null">
+                  create_time=#{createTime},
+              </if>
+              <if test="updateTime!=null">
+                  update_time=#{updateTime},
+              </if>
+          </trim>
+          where product_id=#{productId}
+    </update>
+
+    <delete id="deleteProductInfoByProductId" parameterType="com.cookie.pojo.ProductInfo">
+        delete from product_info
+        where product_id=#{productId}
+    </delete>
+
+
+</mapper>
