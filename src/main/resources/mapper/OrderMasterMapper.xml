@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cookie.dao.OrderMasterMapper">
+
+    <resultMap id="BaseResultMap"   type="com.cookie.dto.OrderMasterDTO">
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+        <result column="buyer_phone" property="buyerPhone" jdbcType="VARCHAR" />
+        <result column="buyer_address" property="buyerAddress" jdbcType="VARCHAR" />
+        <result column="buyer_openid" property="buyerOpenid" jdbcType="VARCHAR" />
+        <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+        <result column="order_status" property="orderStatus" jdbcType="TINYINT" />
+        <result column="pay_status" property="payStatus" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    order_id, buyer_name, buyer_phone, buyer_address, buyer_openid, order_amount, order_status,
+    pay_status, create_time, update_time
+  </sql>
+
+    <select id="getOrderMasterList"  resultMap="BaseResultMap"  parameterType="com.cookie.pojo.OrderMaster">
+        select <include refid="Base_Column_List"/>
+        from order_master
+        where 1=1
+        <if test="buyerName !=null AND buyerName !=''">
+            AND  buyer_name=#{buyerName}
+        </if>
+        <if test="buyerPhone !=null AND buyerPhone !=''">
+            AND  buyer_phone=#{buyerPhone}
+        </if>
+    </select>
+    
+    <select id="getOrderMasterByOrderId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.OrderMaster" >
+        select <include refid="Base_Column_List"/>
+        from order_master
+        where order_id = #{orderId}
+    </select>
+
+    <insert id="addOrderMaster" parameterType="com.cookie.pojo.OrderMaster" >
+      insert into order_master (order_id, buyer_name, buyer_phone, buyer_address,
+      buyer_openid, order_amount, order_status, pay_status,
+      create_time, update_time)
+      values (#{orderId}, #{buyerName}, #{buyerPhone}, #{buyerAddress},
+      #{buyerOpenid}, #{orderAmount}, #{orderStatus}, #{payStatus},
+      #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateOrderMaster" parameterType="com.cookie.pojo.OrderMaster" >
+        update order_master
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buyerName !=null">
+                buyer_name = #{buyerName},
+            </if>
+            <if test="buyerPhone !=null">
+                buyer_phone = #{buyerPhone},
+            </if>
+            <if test="buyerAddress !=null">
+                buyer_address = #{buyerAddress},
+            </if>
+            <if test="buyerOpenid !=null">
+                buyer_openid = #{buyerOpenid},
+            </if>
+            <if test="orderAmount !=null">
+                order_amount = #{orderAmount},
+            </if>
+            <if test="orderStatus !=null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="payStatus !=null">
+                pay_status = #{payStatus},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                update_time = #{updateTime},
+            </if>
+         </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteOrderMasterByParam" parameterType="com.cookie.pojo.OrderDetail" >
+        delete from order_master
+        where  order_id = #{orderId}
+    </delete>
+
+
+
+</mapper>

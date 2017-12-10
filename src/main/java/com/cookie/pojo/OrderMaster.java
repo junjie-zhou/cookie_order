@@ -38,8 +38,23 @@ public class OrderMaster {
     public OrderMaster() {
     }
 
+    public OrderMaster(String orderId) {
+      this.orderId=orderId;
+    }
+
+    public OrderMaster(String orderId,String buyerName, String buyerPhone, String buyerAddress, String buyerOpenid, BigDecimal orderAmount, Integer orderStatus, Integer payStatus) {
+        this.orderId=orderId;
+        this.buyerName = buyerName;
+        this.buyerPhone = buyerPhone;
+        this.buyerAddress = buyerAddress;
+        this.buyerOpenid = buyerOpenid;
+        this.orderAmount = orderAmount;
+        this.orderStatus = orderStatus;
+        this.payStatus = payStatus;
+    }
+
     public OrderMaster(String orderId, String buyerName, String buyerPhone, String buyerAddress, String buyerOpenid,
-                        BigDecimal orderAmount, Integer orderStatus, Integer payStatus, Date createTime, Date updateTime) {
+                       BigDecimal orderAmount, Integer orderStatus, Integer payStatus, Date createTime, Date updateTime) {
         this.orderId = orderId;
         this.buyerName = buyerName;
         this.buyerPhone = buyerPhone;

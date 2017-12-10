@@ -43,7 +43,7 @@
     <update id="updateByDetailId" parameterType="com.cookie.pojo.OrderDetail" >
         update order_detail
         set product_quantity = #{productQuantity},
-        update_time = #{updateTime}
+        update_time =now()
         where detail_id = #{detailId}
     </update>
 
