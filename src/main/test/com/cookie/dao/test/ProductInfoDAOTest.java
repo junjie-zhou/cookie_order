@@ -1,11 +1,7 @@
 package com.cookie.dao.test;
 
-import com.cookie.CookieApplication;
-import com.cookie.dao.ProductCategoryMapper;
 import com.cookie.dao.ProductInfoMapper;
-import com.cookie.dto.ProductCategoryDTO;
 import com.cookie.dto.ProductInfoDTO;
-import com.cookie.pojo.ProductCategory;
 import com.cookie.pojo.ProductInfo;
 import org.junit.Assert;
 import org.junit.Test;

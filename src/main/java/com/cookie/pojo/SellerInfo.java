@@ -14,7 +14,7 @@ import java.util.Date;
 public class SellerInfo {
 
     @Id
-    private String sellerId;
+    private String id;
 
     private String username;
 
@@ -25,4 +25,17 @@ public class SellerInfo {
     private Date createTime;
 
     private Date updateTime;
+
+    public SellerInfo(){
+    }
+
+    public SellerInfo(String id, String username, String password, String openid, Date createTime,
+                      Date updateTime) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.openid = openid;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 }

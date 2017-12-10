@@ -14,7 +14,7 @@ import java.util.Date;
 public class SellerInfoDTO {
 
     @Id
-    private String sellerId;
+    private String id;
 
     private String username;
 

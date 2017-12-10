@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cookie.dao.SellerInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.cookie.dto.SellerInfoDTO" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="openid" property="openid" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, username, password, openid, create_time, update_time
+    </sql>
+
+    <select id="getSellerInfo" resultMap="BaseResultMap" parameterType="com.cookie.pojo.SellerInfo">
+        select <include refid="Base_Column_List"/>
+        from seller_info
+        where id=#{id}
+    </select>
+
+    <insert id="addSellerInfo" parameterType="com.cookie.pojo.SellerInfo">
+        insert into seller_info (id, username, password, openid, create_time,
+        update_time)
+        values (#{id}, #{username}, #{password}, #{openid}, #{createTime},
+        #{updateTime})
+    </insert>
+
+    <update id="updateSellerInfo" parameterType="com.cookie.pojo.SellerInfo">
+        update seller_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="openid!=null">
+                openid=#{openid},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteSellerInfo" parameterType="com.cookie.pojo.SellerInfo" >
+        delete from seller_info
+        where id=#{id}
+    </delete>
+
+</mapper>
