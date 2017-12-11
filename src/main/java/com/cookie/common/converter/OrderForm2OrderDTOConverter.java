@@ -1,6 +1,7 @@
 package com.cookie.common.converter;
 
 import com.cookie.dto.OrderDTO;
+import com.cookie.dto.OrderDetailDTO;
 import com.cookie.enums.ResultEnum;
 import com.cookie.exception.SellException;
 import com.cookie.form.OrderForm;
@@ -26,7 +27,7 @@ public class OrderForm2OrderDTOConverter {
         orderDTO.setBuyerAddress(orderForm.getAddress());
         orderDTO.setBuyerName(orderForm.getName());
 
-        List<OrderDetail> orderDetailList;
+        List<OrderDetailDTO> orderDetailList;
         try {
             orderDetailList = gson.fromJson(orderForm.getItems(), new TypeToken<List<OrderDetail>>(){}.getType());
         } catch (Exception e) {
