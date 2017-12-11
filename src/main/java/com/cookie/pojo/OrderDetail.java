@@ -31,6 +31,10 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
+    public OrderDetail(String detailId) {
+        this.detailId = detailId;
+    }
+
     public OrderDetail(String detailId, String orderId, String productId, String productName, BigDecimal productPrice,
                        Integer productQuantity, String productIcon, Date createTime, Date updateTime) {
         this.detailId = detailId;

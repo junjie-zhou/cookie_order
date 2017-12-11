@@ -14,7 +14,7 @@ public interface OrderDetailMapper {
 
     OrderDetailDTO findByDetailId(OrderDetail orderDetail);
 
-    List<OrderDetailDTO> findByOrderId(OrderMaster orderMaster);
+    List<OrderDetailDTO> findByOrderId(OrderDetail orderDetail);
 
     boolean insertOrderDetail(OrderDetail orderDetail);
 
@@ -22,6 +22,6 @@ public interface OrderDetailMapper {
 
     boolean deleteByDetailId(OrderDetail orderDetail);
 
-    boolean deleteByOrderId(OrderMaster orderMaster);
+    boolean deleteByOrderId(OrderDetail orderDetail);
 
 }

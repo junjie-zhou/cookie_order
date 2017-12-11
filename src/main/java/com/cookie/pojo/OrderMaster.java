@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @ToString
-public class OrderMaster {
+public class OrderMaster  extends  BasePageParam{
 
 
     private String orderId;

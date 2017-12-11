@@ -29,6 +29,7 @@ public class OrderMasterDAOTest {
     @Test
     public void addOrderMaster(){
         OrderMaster pojo=new OrderMaster("CK4378343","测试","测试","测试","测测",new BigDecimal(687.56),1,1);
+
         boolean result =orderMasterMapper.addOrderMaster(pojo);
         Assert.assertEquals(true,result);
     }
@@ -39,6 +40,13 @@ public class OrderMasterDAOTest {
         OrderMasterDTO dto=orderMasterMapper.getOrderMasterByOrderId(new OrderMaster("CK4378343"));
         Assert.assertNotNull(dto);
         System.out.println(dto.toString());
+    }
+
+    @Test
+    public void updateOrderMaster(){
+        OrderMaster pojo=new OrderMaster("CK4378343","土豆","13446548796","测试","测测",new BigDecimal(1000),1,1);
+       boolean result = orderMasterMapper.updateOrderMaster(pojo);
+       Assert.assertTrue(result);
     }
 
 }

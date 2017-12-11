@@ -2,7 +2,6 @@ package com.cookie.dto;
 
 import com.cookie.enums.OrderStatus;
 import com.cookie.enums.PayStatus;
-import com.cookie.pojo.OrderDetail;
 import com.cookie.serializer.Date2LongSerializer;
 import com.cookie.utils.EnumUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,7 +42,7 @@ public class OrderDTO {
     @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
-    private List<OrderDetail> orderDetailList;
+    private List<OrderDetailDTO> orderDetailList;
 
     //返回的json中需要list数据，但实际没有数据  不能用null表示 需要用数组表示[]
     //private List<OrderDetail> orderDetailList = new ArrayList<>();
@@ -138,11 +137,11 @@ public class OrderDTO {
         this.updateTime = updateTime;
     }
 
-    public List<OrderDetail> getOrderDetailList() {
+    public List<OrderDetailDTO> getOrderDetailList() {
         return orderDetailList;
     }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+    public void setOrderDetailList(List<OrderDetailDTO> orderDetailList) {
         this.orderDetailList = orderDetailList;
     }
 }
