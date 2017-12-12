@@ -2,7 +2,10 @@ package com.cookie.service;
 
 
 import com.cookie.dto.CartDTO;
+import com.cookie.dto.ProductInfoDTO;
+import com.cookie.pojo.BasePageParam;
 import com.cookie.pojo.ProductInfo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,17 +13,17 @@ import java.util.List;
 
 public interface ProductInfoService {
 
-    ProductInfo findOne(String productId);
+    ProductInfoDTO findOne(ProductInfo productInfo);
 
     /**
      * 查询所有在架视频列表
      * @return
      */
-    List<ProductInfo> findUpAll();
+    List<ProductInfoDTO> findUpAll();
 
-    Page<ProductInfo> findAll(Pageable pageable);
+    PageInfo<ProductInfoDTO> findAll(BasePageParam basePageParam);
 
-    ProductInfo save(ProductInfo productInfo);
+    ProductInfoDTO save(ProductInfo productInfo);
 
     //加库存
     void increaseStock(List<CartDTO> cartDTOList);
@@ -29,8 +32,8 @@ public interface ProductInfoService {
     void decreaseStock(List<CartDTO> cartDTOList);
 
     //上架
-    ProductInfo onSale(String productId);
+    ProductInfoDTO onSale(ProductInfo productInfo);
 
     //下架
-    ProductInfo  offSale(String productId);
+    ProductInfoDTO  offSale(ProductInfo productInfo);
 }

@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 import java.util.Date;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -25,9 +26,11 @@ public class ProductCatalogDAOTest {
 
    @Test
    public void testSelectByCategoryType(){
-       ProductCategoryDTO dto=productCategoryMapper.selectByCategoryType(1);
-      Assert.assertEquals(dto,null);
-       //System.out.println(dto.toString());
+       ProductCategory productCategory=new ProductCategory();
+       productCategory.setCategoryType(1);
+       ProductCategoryDTO dto=productCategoryMapper.selectByCategoryType(productCategory);
+      //Assert.assertEquals(dto,null);
+       System.out.println(dto.toString());
    }
 
    @Test

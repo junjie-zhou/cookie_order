@@ -25,7 +25,7 @@
         where detail_id=#{detailId}
     </select>
     
-    <select id="findByOrderId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.OrderMaster" >
+    <select id="findByOrderId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.OrderDetail" >
         select <include refid="Base_Column_List"/>
         from order_detail
         where order_id=#{orderId}
@@ -52,7 +52,7 @@
         where detail_id = #{detailId}
     </delete>
 
-    <delete id="deleteByOrderId" parameterType="com.cookie.pojo.OrderMaster">
+    <delete id="deleteByOrderId" parameterType="com.cookie.pojo.OrderDetail">
         delete from order_detail
         where order_id=#{orderId}
     </delete>

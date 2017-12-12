@@ -18,7 +18,7 @@
     <select id="getSellerInfo" resultMap="BaseResultMap" parameterType="com.cookie.pojo.SellerInfo">
         select <include refid="Base_Column_List"/>
         from seller_info
-        where id=#{id}
+        where openid=#{openid}
     </select>
 
     <insert id="addSellerInfo" parameterType="com.cookie.pojo.SellerInfo">

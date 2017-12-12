@@ -1,6 +1,7 @@
 package com.cookie.service;
 
 
+import com.cookie.dto.SellerInfoDTO;
 import com.cookie.pojo.SellerInfo;
 
 /**
@@ -8,5 +9,5 @@ import com.cookie.pojo.SellerInfo;
  */
 public interface SellerService {
 
-    SellerInfo findSellerInfoByOpenid(String openid);
+    SellerInfoDTO findSellerInfoByOpenid(SellerInfo sellerInfo);
 }

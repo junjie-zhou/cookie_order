@@ -4,10 +4,7 @@ package com.cookie.service.impl;
 import com.cookie.common.converter.OrderMaster2OrderDTOConverter;
 import com.cookie.dao.OrderDetailMapper;
 import com.cookie.dao.OrderMasterMapper;
-import com.cookie.dto.CartDTO;
-import com.cookie.dto.OrderDTO;
-import com.cookie.dto.OrderDetailDTO;
-import com.cookie.dto.OrderMasterDTO;
+import com.cookie.dto.*;
 import com.cookie.enums.OrderStatus;
 import com.cookie.enums.PayStatus;
 import com.cookie.enums.ResultEnum;
@@ -24,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import com.cookie.service.ProductInfoService;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -37,9 +35,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class OrderServerImpl implements OrderServer {
-
-    @Autowired
-    private ProductInfoService productInfoService;
 
     @Autowired
     private OrderDetailMapper orderDetailRepository;
@@ -56,6 +51,9 @@ public class OrderServerImpl implements OrderServer {
     @Autowired
     private WebSocket webSocket;
 
+    @Autowired
+    private ProductInfoService productInfoService;
+
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -66,17 +64,19 @@ public class OrderServerImpl implements OrderServer {
 
         //1. 查询商品(数量，价格)
         for (OrderDetailDTO orderDetail : orderDTO.getOrderDetailList()) {
-            ProductInfo productInfo = productInfoService.findOne(orderDetail.getProductId());
-            if (productInfo == null) {
+            ProductInfo productInfo=new ProductInfo();
+            productInfo.setProductId(orderDetail.getProductId());
+            ProductInfoDTO productInfoDTO = productInfoService.findOne(productInfo);
+            if (productInfoDTO == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
 
             //2. 计算订单总价
-            orderAmount = productInfo.getProductPrice()
+            orderAmount = productInfoDTO.getProductPrice()
                     .multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmount);
 
             // 订单详情存入数据库
-            BeanUtils.copyProperties(productInfo, orderDetail);
+            BeanUtils.copyProperties(productInfoDTO, orderDetail);
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
             orderDetail.setOrderId(orderId);
             OrderDetail dto=new OrderDetail();
@@ -106,13 +106,13 @@ public class OrderServerImpl implements OrderServer {
     }
 
     @Override
-    public OrderDTO findOne(String orderId) {
-        OrderMasterDTO orderMaster = orderMasterRepository.getOrderMasterByOrderId(new OrderMaster(orderId));
+    public OrderDTO findOne(OrderMaster orderMaste) {
+        OrderMasterDTO orderMaster = orderMasterRepository.getOrderMasterByOrderId(new OrderMaster(orderMaste.getOrderId()));
         if (orderMaster == null) {
             throw  new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
 
-        List<OrderDetailDTO> orderDetailList = orderDetailRepository.findByOrderId(new OrderDetail(orderId));
+        List<OrderDetailDTO> orderDetailList = orderDetailRepository.findByOrderId(new OrderDetail(orderMaste.getOrderId()));
         if (CollectionUtils.isEmpty(orderDetailList)) {
             throw  new SellException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
         }

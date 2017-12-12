@@ -20,6 +20,17 @@
         product_status, category_type, create_time, update_time
     </sql>
 
+    <select id="getAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from product_info
+    </select>
+
+    <select id="getUpAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from product_info
+        where product_status=0
+    </select>
+
     <select id="getProductInfoByProductId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductInfo">
         select <include refid="Base_Column_List"/>
         from product_info

@@ -24,6 +24,14 @@ public class ProductInfoDAOTest {
     private ProductInfoMapper productInfoMapper;
 
     @Test
+    public void testGetAll(){
+        List<ProductInfoDTO> productInfoDTOs = productInfoMapper.getAll();
+        for(ProductInfoDTO productInfoDTO : productInfoDTOs){
+            System.out.println(productInfoDTO.toString());
+        }
+    }
+
+    @Test
     public void testAddProductInfo(){
         ProductInfo productInfo=new ProductInfo("10SDCX45","测试",200,new BigDecimal(1600),"测试","测试",0,5424852,
                 new Date(),new Date());
@@ -39,7 +47,6 @@ public class ProductInfoDAOTest {
         for(ProductInfoDTO p : productInfoListByCategoryType){
             System.out.println(p.toString());
         }
-
     }
 
     @Test

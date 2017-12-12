@@ -3,6 +3,7 @@ package com.cookie.service.impl;
 import com.cookie.dto.OrderDTO;
 import com.cookie.enums.ResultEnum;
 import com.cookie.exception.SellException;
+import com.cookie.pojo.OrderMaster;
 import com.cookie.service.OrderServer;
 import com.cookie.service.PayService;
 import com.cookie.utils.MathUtil;
@@ -59,7 +60,9 @@ public class PayServiceImpl implements PayService {
         log.info("[微信支付] 异步通知, payResponse={}", JsonUtil.toJson(payResponse));
 
         //查询订单
-        OrderDTO orderDTO = orderServer.findOne(payResponse.getOrderId());
+        OrderMaster orderMaster=new OrderMaster();
+        orderMaster.setOrderId(payResponse.getOrderId());
+        OrderDTO orderDTO = orderServer.findOne(orderMaster);
         if (orderDTO == null) {
             log.error("[微信支付] 异步通知，订单不存在,orderId={}", payResponse.getOrderId());
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);

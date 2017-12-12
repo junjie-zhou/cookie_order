@@ -16,7 +16,12 @@
         category_id, category_name, category_type, create_time, update_time
     </sql>
 
-    <select id="selectByCategoryType" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="getAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from `product_category`
+    </select>
+
+    <select id="selectByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
          FROM `product_category` WHERE category_type = #{categoryType}
     </select>
@@ -37,18 +42,18 @@
         )
     </insert>
 
-    <select id="findByCategoryType" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="findByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
         FROM `product_category` WHERE category_type = #{categoryType}
     </select>
 
-    <update id="updateByCategoryType">
+    <update id="updateByCategoryType" parameterType="com.cookie.pojo.ProductCategory">
           update product_category
           set category_name = #{categoryName}
           where category_type = #{categoryType}
     </update>
 
-    <delete id="deleteByCategoryType" parameterType="Integer">
+    <delete id="deleteByCategoryType" parameterType="com.cookie.pojo.ProductCategory">
         delete from product_category where category_type = #{category_type}
     </delete>
 

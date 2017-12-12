@@ -1,8 +1,10 @@
 package com.cookie.service;
 
+import com.cookie.pojo.ProductInfo;
+
 public interface SecKillService {
 
-    String querySecKillProductInfo(String productId);
+    String querySecKillProductInfo(ProductInfo productInfo);
 
-    void orderProductMockDiffUser(String productId);
+    void orderProductMockDiffUser(ProductInfo productInfo);
 }

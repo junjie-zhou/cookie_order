@@ -2,17 +2,18 @@ package com.cookie.service;
 
 
 
+import com.cookie.dto.ProductCategoryDTO;
 import com.cookie.pojo.ProductCategory;
 
 import java.util.List;
 
 public interface ProductCategoryService {
 
-    ProductCategory findOne(Integer categoryId);
+    ProductCategoryDTO findOne(ProductCategory productCategory);
 
-    List<ProductCategory> findAll();
+    List<ProductCategoryDTO> findAll();
 
-    List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeIds);
+    List<ProductCategoryDTO> findByCategoryTypeIn(List<ProductCategory> productCategory);
 
-    ProductCategory save(ProductCategory productCategory);
+    ProductCategoryDTO save(ProductCategory productCategory);
 }

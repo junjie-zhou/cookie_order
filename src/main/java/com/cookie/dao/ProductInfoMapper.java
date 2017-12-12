@@ -10,6 +10,10 @@ import java.util.List;
  */
 public interface ProductInfoMapper {
 
+    List<ProductInfoDTO> getAll();
+
+    List<ProductInfoDTO> getUpAll();
+
     ProductInfoDTO getProductInfoByProductId(ProductInfo productInfo);
 
     List<ProductInfoDTO> getProductInfoListByCategoryType(ProductInfo productInfo);

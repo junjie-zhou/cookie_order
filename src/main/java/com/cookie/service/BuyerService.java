@@ -2,22 +2,21 @@ package com.cookie.service;
 
 
 import com.cookie.dto.OrderDTO;
+import com.cookie.pojo.OrderMaster;
 
 public interface BuyerService {
 
     /**
      * 查询一个订单
-     * @param openid
-     * @param orderId
+     * @param orderMaster
      * @return
      */
-    OrderDTO findOrderOne(String openid, String orderId);
+    OrderDTO findOrderOne(OrderMaster orderMaster);
 
     /**
      * 取消一个订单
-     * @param openid
-     * @param orderId
+     * @param orderMaster
      * @return
      */
-    OrderDTO cancelOrder(String openid, String orderId);
+    OrderDTO cancelOrder(OrderMaster orderMaster);
 }

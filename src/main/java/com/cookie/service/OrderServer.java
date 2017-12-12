@@ -23,10 +23,10 @@ public interface OrderServer {
     /**
      * 查询单个订单
      *
-     * @param orderId 订单id
+     * @param orderMaste 订单id
      * @return 查询到的OrderDTO
      */
-    OrderDTO findOne(String orderId);
+    OrderDTO findOne(OrderMaster orderMaste);
 
 
     /**

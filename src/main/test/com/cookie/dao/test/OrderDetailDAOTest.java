@@ -50,9 +50,9 @@ public class OrderDetailDAOTest {
 
     @Test
     public void testFindByDetailId(){
-        OrderMaster orderMaster=new OrderMaster();
-        orderMaster.setOrderId("1");
-        List<OrderDetailDTO> byOrderId = orderDetailMapper.findByOrderId(orderMaster);
+        OrderDetail orderDetail=new OrderDetail();
+        orderDetail.setOrderId("1");
+        List<OrderDetailDTO> byOrderId = orderDetailMapper.findByOrderId(orderDetail);
         for(OrderDetailDTO orderDetailDTO:byOrderId){
             System.out.println(orderDetailDTO.toString());
         }
@@ -71,9 +71,9 @@ public class OrderDetailDAOTest {
 
     @Test
     public void testDeleteByOrderId(){
-        OrderMaster orderMaster=new OrderMaster();
-        orderMaster.setOrderId("1");
-        boolean b = orderDetailMapper.deleteByOrderId(orderMaster);
+        OrderDetail orderDetail=new OrderDetail();
+        orderDetail.setOrderId("1");
+        boolean b = orderDetailMapper.deleteByOrderId(orderDetail);
         System.out.println(b);
     }
 
