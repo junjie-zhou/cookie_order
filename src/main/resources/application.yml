@@ -23,6 +23,7 @@ server:
 #  level: info
 
 # 微信配置
+
 wechat:
   mpAppId: wxd898fcb01713c658
   mpAppSecret: 47ccc303338cee6e62894fxxxxxxxxxxx
