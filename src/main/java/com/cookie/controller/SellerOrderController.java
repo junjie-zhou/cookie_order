@@ -1,14 +1,15 @@
 package com.cookie.controller;
 
-import com.mao.common.enums.ResultEnum;
-import com.mao.dto.OrderDTO;
-import com.mao.exception.SellException;
-import com.mao.service.OrderServer;
-import com.mao.service.WebSocket;
+import com.cookie.dto.OrderDTO;
+import com.cookie.enums.ResultEnum;
+import com.cookie.exception.SellException;
+import com.cookie.pojo.OrderMaster;
+import com.cookie.service.OrderServer;
+import com.cookie.service.WebSocket;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +45,8 @@ public class SellerOrderController {
     @GetMapping("/list")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        PageRequest request = new PageRequest(page - 1, size);
-        Page<OrderDTO> orderDTOPage = orderServer.findList(request);
+        Page request=new Page(page-1,size);
+        PageInfo<OrderDTO> orderDTOPage = orderServer.findList(request);
         Map<String, Object> map = new HashMap();
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
@@ -58,10 +59,10 @@ public class SellerOrderController {
     @GetMapping("/list1")
     public List<OrderDTO> list1(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                 @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        PageRequest request = new PageRequest(page - 1, size);
-        Page<OrderDTO> orderDTOPage = orderServer.findList(request);
+        Page request=new Page(page-1,size);
+        PageInfo<OrderDTO> orderDTOPage = orderServer.findList(request);
 
-        return orderDTOPage.getContent();
+        return orderDTOPage.getList();
     }
 
     @GetMapping("/success")
@@ -84,7 +85,9 @@ public class SellerOrderController {
                                @RequestParam("orderId") String orderId, Integer detail) {
         Map<String, Object> map = new HashMap();
         try {
-            OrderDTO orderDTO = orderServer.findOne(orderId);
+            OrderMaster orderMaster=new OrderMaster();
+            orderMaster.setOrderId(orderId);
+            OrderDTO orderDTO = orderServer.findOne(orderMaster);
             if (orderDTO == null) {
                 log.error("[卖家端取消订单] 查询不到订单");
                 map.put("msg", ResultEnum.ORDER_NOT_EXIST.getMessage());
@@ -121,8 +124,9 @@ public class SellerOrderController {
     public ModelAndView detail(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                @RequestParam("orderId") String orderId) {
         Map<String, Object> map = new HashMap();
-
-        OrderDTO orderDTO = orderServer.findOne(orderId);
+        OrderMaster orderMaster=new OrderMaster();
+        orderMaster.setOrderId(orderId);
+        OrderDTO orderDTO = orderServer.findOne(orderMaster);
         if (orderDTO == null) {
             log.error("[卖家端查看订单详情] 查询不到订单");
             map.put("msg", ResultEnum.ORDER_NOT_EXIST.getMessage());
@@ -148,8 +152,9 @@ public class SellerOrderController {
     public ModelAndView finish(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                @RequestParam("orderId") String orderId, Integer detail) {
         Map<String, Object> map = new HashMap();
-
-        OrderDTO orderDTO = orderServer.findOne(orderId);
+        OrderMaster orderMaster=new OrderMaster();
+        orderMaster.setOrderId(orderId);
+        OrderDTO orderDTO = orderServer.findOne(orderMaster);
         if (orderDTO == null) {
             log.error("[卖家端完结订单] 查询不到订单");
             map.put("msg", ResultEnum.ORDER_NOT_EXIST.getMessage());

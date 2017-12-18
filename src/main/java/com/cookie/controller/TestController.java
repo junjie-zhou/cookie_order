@@ -1,6 +1,6 @@
 package com.cookie.controller;
 
-import com.mao.service.WebSocket;
+import com.cookie.service.WebSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

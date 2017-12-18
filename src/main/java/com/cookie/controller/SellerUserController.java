@@ -1,12 +1,13 @@
 package com.cookie.controller;
 
-import com.mao.common.config.ProjectUrlConfig;
-import com.mao.common.constant.CookieConstant;
-import com.mao.common.constant.RedisConstant;
-import com.mao.common.enums.ResultEnum;
-import com.mao.common.utils.CookieUtil;
-import com.mao.entity.SellerInfo;
-import com.mao.service.SellerService;
+import com.cookie.common.config.ProjectUrlConfig;
+import com.cookie.common.constant.CookieConstant;
+import com.cookie.common.constant.RedisConstant;
+import com.cookie.dto.SellerInfoDTO;
+import com.cookie.enums.ResultEnum;
+import com.cookie.pojo.SellerInfo;
+import com.cookie.service.SellerService;
+import com.cookie.utils.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -42,9 +43,12 @@ public class SellerUserController {
     @GetMapping("/login")
     public ModelAndView login(@RequestParam("openid") String openid, Map<String, Object> map, HttpServletResponse response) {
 
+
         // 1.openid去和数据库里的数据匹配
-        SellerInfo sellerInfo = sellerService.findSellerInfoByOpenid(openid);
-        if (sellerInfo == null) {
+        SellerInfo sellerInfo=new SellerInfo();
+        sellerInfo.setOpenid(openid);
+        SellerInfoDTO sellerInfoDTO = sellerService.findSellerInfoByOpenid(sellerInfo);
+        if (sellerInfoDTO == null) {
             map.put("msg", ResultEnum.LOGIN_FAIL.getMessage());
             map.put("url", "/sell/seller/order/list");
 

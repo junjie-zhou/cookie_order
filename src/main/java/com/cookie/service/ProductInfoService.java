@@ -3,11 +3,9 @@ package com.cookie.service;
 
 import com.cookie.dto.CartDTO;
 import com.cookie.dto.ProductInfoDTO;
-import com.cookie.pojo.BasePageParam;
 import com.cookie.pojo.ProductInfo;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ public interface ProductInfoService {
      */
     List<ProductInfoDTO> findUpAll();
 
-    PageInfo<ProductInfoDTO> findAll(BasePageParam basePageParam);
+    PageInfo<ProductInfoDTO> findAll(Page page);
 
     ProductInfoDTO save(ProductInfo productInfo);
 

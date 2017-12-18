@@ -1,13 +1,14 @@
 package com.cookie.controller;
 
-import com.mao.common.utils.Result;
-import com.mao.common.utils.ResultUtil;
-import com.mao.entity.ProductCategory;
-import com.mao.entity.ProductInfo;
-import com.mao.service.ProductCategoryService;
-import com.mao.service.ProductInfoService;
-import com.mao.vo.ProductInfoVO;
-import com.mao.vo.ProductVO;
+import com.cookie.dto.ProductCategoryDTO;
+import com.cookie.dto.ProductInfoDTO;
+import com.cookie.dto.ProductInfoVO;
+import com.cookie.dto.ProductVO;
+import com.cookie.pojo.ProductCategory;
+import com.cookie.service.ProductCategoryService;
+import com.cookie.service.ProductInfoService;
+import com.cookie.utils.Result;
+import com.cookie.utils.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class BuyerPruductController {
     @GetMapping(value = "/list")
     public Result list(){
         //1.查询所有的上架商品
-        List<ProductInfo> productInfoList = productInfoService.findUpAll();
+        List<ProductInfoDTO> productInfoList = productInfoService.findUpAll();
 
         //2. 查询类目(一次性查询)
         /*List<Integer> categoryTypeList = new ArrayList<>();
@@ -40,7 +41,13 @@ public class BuyerPruductController {
         }*/
         List<Integer> categoryTypeList = productInfoList.stream()
                 .map(e -> e.getCategoryType()).collect(Collectors.toList());
-        List<ProductCategory> productCategoryList = productCategoryService.findByCategoryTypeIn(categoryTypeList);
+        List<ProductCategory> productCategoryList=new ArrayList<ProductCategory>();
+        for(Integer categoryType:categoryTypeList){
+            ProductCategory productCategory = new ProductCategory();
+            productCategory.setCategoryType(categoryType);
+            productCategoryList.add(productCategory);
+        }
+        List<ProductCategoryDTO> productCategoryDTOList = productCategoryService.findByCategoryTypeIn(productCategoryList);
 
         //3. 数据拼接
         List<ProductVO> productVOList = new ArrayList<>();
@@ -51,7 +58,7 @@ public class BuyerPruductController {
             BeanUtils.copyProperties(productCategory, productVO);
 
             List<ProductInfoVO> productInfoVOList = new ArrayList<>();
-            for (ProductInfo productInfo : productInfoList) {
+            for (ProductInfoDTO productInfo : productInfoList) {
                 if (productInfo.getCategoryType().equals(productCategory.getCategoryType())) {
                     ProductInfoVO productInfoVO = new ProductInfoVO();
                     BeanUtils.copyProperties(productInfo, productInfoVO);

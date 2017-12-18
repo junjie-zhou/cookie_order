@@ -20,6 +20,11 @@
     pay_status, create_time, update_time
   </sql>
 
+    <select id="getOrderMasterAllList"  resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from order_master
+    </select>
+
     <select id="getOrderMasterList"  resultMap="BaseResultMap"  parameterType="com.cookie.pojo.OrderMaster">
         select <include refid="Base_Column_List"/>
         from order_master

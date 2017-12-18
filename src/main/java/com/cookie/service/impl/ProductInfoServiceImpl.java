@@ -6,14 +6,12 @@ import com.cookie.dto.ProductInfoDTO;
 import com.cookie.enums.ProductStatus;
 import com.cookie.enums.ResultEnum;
 import com.cookie.exception.SellException;
-import com.cookie.pojo.BasePageParam;
 import com.cookie.pojo.ProductInfo;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import com.cookie.service.ProductInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,9 +41,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
-    public PageInfo<ProductInfoDTO> findAll(BasePageParam basePageParam) {
+    public PageInfo<ProductInfoDTO> findAll(Page page) {
         List<ProductInfoDTO> list= productInfoMapper.getAll();
-        PageHelper.startPage(basePageParam.getPageNum(),basePageParam.getPageSize());
+        PageHelper.startPage(page.getPageNum(),page.getPageSize());
         PageInfo<ProductInfoDTO> productInfoDTOPageInfo=new PageInfo<ProductInfoDTO>(list);
         return productInfoDTOPageInfo;
     }

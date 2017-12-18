@@ -1,6 +1,7 @@
 package com.cookie.controller;
 
-import com.mao.service.SecKillService;
+import com.cookie.pojo.ProductInfo;
+import com.cookie.service.SecKillService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,9 @@ public class SecKillController {
      */
     @GetMapping("/query/{productId}")
     public String query(@PathVariable String productId) throws Exception {
-        return secKillService.querySecKillProductInfo(productId);
+        ProductInfo productInfo=new ProductInfo();
+        productInfo.setProductId(productId);
+        return secKillService.querySecKillProductInfo(productInfo);
     }
 
 
@@ -37,7 +40,9 @@ public class SecKillController {
     @GetMapping("/order/{productId}")
     public String kill(@PathVariable String productId) throws Exception {
         log.info("@skill request, productId:{}", productId);
-        secKillService.orderProductMockDiffUser(productId);
-        return secKillService.querySecKillProductInfo(productId);
+        ProductInfo productInfo=new ProductInfo();
+        productInfo.setProductId(productId);
+        secKillService.orderProductMockDiffUser(productInfo);
+        return secKillService.querySecKillProductInfo(productInfo);
     }
 }

@@ -1,8 +1,9 @@
 package com.cookie.controller;
 
-import com.mao.common.config.ProjectUrlConfig;
-import com.mao.common.enums.ResultEnum;
-import com.mao.exception.SellException;
+
+import com.cookie.common.config.ProjectUrlConfig;
+import com.cookie.enums.ResultEnum;
+import com.cookie.exception.SellException;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;

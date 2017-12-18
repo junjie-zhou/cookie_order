@@ -16,6 +16,8 @@ public interface OrderMasterMapper {
 
     OrderMasterDTO getOrderMasterByOrderId(OrderMaster orderMaster);
 
+    List<OrderMasterDTO> getOrderMasterAllList();
+
     List<OrderMasterDTO> getOrderMasterList(OrderMaster orderMaster);
 
     boolean deleteOrderMasterByParam(OrderMaster orderMaster);

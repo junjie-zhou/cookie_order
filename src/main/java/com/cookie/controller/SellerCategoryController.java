@@ -1,9 +1,10 @@
 package com.cookie.controller;
 
-import com.mao.entity.ProductCategory;
-import com.mao.exception.SellException;
-import com.mao.form.CategoryForm;
-import com.mao.service.ProductCategoryService;
+import com.cookie.dto.ProductCategoryDTO;
+import com.cookie.exception.SellException;
+import com.cookie.form.CategoryForm;
+import com.cookie.pojo.ProductCategory;
+import com.cookie.service.ProductCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class SellerCategoryController {
 
     @GetMapping("/list")
     public ModelAndView list(Map<String, Object> map) {
-        List<ProductCategory> categoryList = productCategoryService.findAll();
+        List<ProductCategoryDTO> categoryList = productCategoryService.findAll();
         map.put("categoryList", categoryList);
 
         return new ModelAndView("category/list", map);
@@ -43,7 +44,9 @@ public class SellerCategoryController {
     public ModelAndView index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
                               Map<String, Object> map) {
         if (categoryId != null) {
-            ProductCategory category = productCategoryService.findOne(categoryId);
+            ProductCategory productCategory=new ProductCategory();
+            productCategory.setCategoryId(categoryId);
+            ProductCategoryDTO category = productCategoryService.findOne(productCategory);
             map.put("category", category);
         }
 
@@ -61,13 +64,17 @@ public class SellerCategoryController {
             return new ModelAndView("commont/error", map);
         }
 
-        ProductCategory productCategory = new ProductCategory();
+        ProductCategoryDTO productCategoryDTO = new ProductCategoryDTO();
+        ProductCategory productCategory=null;
         try {
             if (!StringUtils.isEmpty(categoryForm.getCategoryId())) {
-                productCategory = productCategoryService.findOne(categoryForm.getCategoryId());
+                productCategory=new ProductCategory();
+                productCategory.setCategoryId(categoryForm.getCategoryId());
+                productCategoryDTO = productCategoryService.findOne(productCategory);
             }
 
-            BeanUtils.copyProperties(categoryForm, productCategory);
+            BeanUtils.copyProperties(categoryForm, productCategoryDTO);
+            BeanUtils.copyProperties(productCategoryDTO, productCategory);
             productCategoryService.save(productCategory);
         } catch (SellException e) {
             map.put("msg", e.getMessage());

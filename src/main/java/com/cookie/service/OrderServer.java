@@ -3,9 +3,8 @@ package com.cookie.service;
 
 import com.cookie.dto.OrderDTO;
 import com.cookie.pojo.OrderMaster;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 /**
  * Created by myseital  on 2017/11/20.
@@ -58,5 +57,7 @@ public interface OrderServer {
      *
      * @return 分页对象
      */
-    PageInfo<OrderDTO> findList(OrderMaster reuest);
+    PageInfo<OrderDTO> findList(OrderMaster reuest,Page page);
+
+    PageInfo<OrderDTO> findList(Page page);
 }

@@ -1,11 +1,12 @@
 package com.cookie.controller;
 
+import com.cookie.dto.OrderDTO;
+import com.cookie.enums.ResultEnum;
+import com.cookie.exception.SellException;
+import com.cookie.pojo.OrderMaster;
+import com.cookie.service.OrderServer;
+import com.cookie.service.PayService;
 import com.lly835.bestpay.model.PayResponse;
-import com.mao.common.enums.ResultEnum;
-import com.mao.dto.OrderDTO;
-import com.mao.exception.SellException;
-import com.mao.service.OrderServer;
-import com.mao.service.PayService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,9 @@ public class PayController {
     @GetMapping("/create")
     public ModelAndView create(@RequestParam("orderId") String orderId, @RequestParam("returnUrl") String returnUrl) {
         // 1.查询订单
-        OrderDTO orderDTO = orderServer.findOne(orderId);
+        OrderMaster orderMaster=new OrderMaster();
+        orderMaster.setOrderId(orderId);
+        OrderDTO orderDTO = orderServer.findOne(orderMaster);
         if (orderDTO == null) {
             log.error("[支付订单] 查询订单出错 orderDTO={}", orderDTO);
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);

@@ -1,17 +1,20 @@
 package com.cookie.controller;
 
-import com.mao.common.converter.OrderForm2OrderDTOConverter;
-import com.mao.common.enums.ResultEnum;
-import com.mao.common.utils.Result;
-import com.mao.common.utils.ResultUtil;
-import com.mao.dto.OrderDTO;
-import com.mao.exception.SellException;
-import com.mao.form.OrderForm;
-import com.mao.service.BuyerService;
-import com.mao.service.OrderServer;
+
+import com.cookie.common.converter.OrderForm2OrderDTOConverter;
+import com.cookie.dto.OrderDTO;
+import com.cookie.enums.ResultEnum;
+import com.cookie.exception.SellException;
+import com.cookie.form.OrderForm;
+import com.cookie.pojo.OrderMaster;
+import com.cookie.service.BuyerService;
+import com.cookie.service.OrderServer;
+import com.cookie.utils.Result;
+import com.cookie.utils.ResultUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -65,14 +68,16 @@ public class BuyerOrderController {
             log.error("[查询订单列表] openid为空");
             throw new SellException(ResultEnum.PARAM_ERROR);
         }
-        PageRequest request = new PageRequest(page, size);
-        Page<OrderDTO> orderDTOPage = orderServer.findList(openid, request);
+        OrderMaster orderMaster=new OrderMaster();
+        orderMaster.setOrderId(openid);
+        Page orderPage=new Page(page,size);
+        PageInfo<OrderDTO> orderDTOPage = orderServer.findList(orderMaster, orderPage);
 
         // 修改返回的时间值 由毫秒到秒 date对应的字段添加@JsonSerialize(using = Date2LongSerializer.class)
         // 返回的值为null 则不返回 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)被废弃
         // 推荐使用 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-        return ResultUtil.success(orderDTOPage.getContent());
+        return ResultUtil.success(orderDTOPage);
     }
 
     @GetMapping(value = "/detail")
@@ -84,7 +89,10 @@ public class BuyerOrderController {
         }
         return ResultUtil.success(orderDTO);*/
 
-        return ResultUtil.success(buyerService.findOrderOne(openid, orderId));
+        OrderMaster orderMaste=new OrderMaster();
+        orderMaste.setOrderId(orderId);
+        orderMaste.setBuyerOpenid(openid);
+        return ResultUtil.success(buyerService.findOrderOne(orderMaste));
     }
 
     @PostMapping(value = "/cancel")
@@ -94,7 +102,10 @@ public class BuyerOrderController {
         orderServer.cancel(orderDTO);
         return ResultUtil.success(orderDTO);*/
 
-        buyerService.cancelOrder(openid, orderId);
+        OrderMaster orderMaste=new OrderMaster();
+        orderMaste.setOrderId(orderId);
+        orderMaste.setBuyerOpenid(openid);
+        buyerService.cancelOrder(orderMaste);
         return ResultUtil.success();
     }
 }

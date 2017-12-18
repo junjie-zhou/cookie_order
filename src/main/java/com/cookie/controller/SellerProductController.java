@@ -1,17 +1,18 @@
 package com.cookie.controller;
 
-import com.mao.common.utils.KeyUtil;
-import com.mao.entity.ProductCategory;
-import com.mao.entity.ProductInfo;
-import com.mao.exception.SellException;
-import com.mao.form.ProductForm;
-import com.mao.service.ProductCategoryService;
-import com.mao.service.ProductInfoService;
+import com.cookie.dto.ProductCategoryDTO;
+import com.cookie.dto.ProductInfoDTO;
+import com.cookie.exception.SellException;
+import com.cookie.form.ProductForm;
+import com.cookie.pojo.ProductInfo;
+import com.cookie.service.ProductCategoryService;
+import com.cookie.service.ProductInfoService;
+import com.cookie.utils.KeyUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -40,8 +41,8 @@ public class SellerProductController {
     @GetMapping("/list")
     public ModelAndView List(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        PageRequest request = new PageRequest(page - 1, size);
-        Page<ProductInfo> productInfoPage = productInfoService.findAll(request);
+        Page request=new Page(page-1,size);
+        PageInfo<ProductInfoDTO> productInfoPage = productInfoService.findAll(request);
         Map<String, Object> map = new HashMap();
         map.put("productInfoPage", productInfoPage);
         map.put("currentPage", page);
@@ -55,7 +56,9 @@ public class SellerProductController {
                                  Map<String, Object> map) {
         map.put("url", "/sell/seller/product/list");
         try {
-            productInfoService.offSale(productId);
+            ProductInfo productInfo=new ProductInfo();
+            productInfo.setProductId(productId);
+            productInfoService.offSale(productInfo);
         } catch (SellException e) {
             map.put("msg", e.getMessage());
 
@@ -70,7 +73,9 @@ public class SellerProductController {
                                 Map<String, Object> map) {
         map.put("url", "/sell/seller/product/list");
         try {
-            productInfoService.onSale(productId);
+            ProductInfo productInfo=new ProductInfo();
+            productInfo.setProductId(productId);
+            productInfoService.onSale(productInfo);
         } catch (SellException e) {
             map.put("msg", e.getMessage());
 
@@ -84,12 +89,14 @@ public class SellerProductController {
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId,
                               Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
-            ProductInfo productInfo = productInfoService.findOne(productId);
+            ProductInfo productInfo=new ProductInfo();
+            productInfo.setProductId(productId);
+            ProductInfoDTO productInfoDTO = productInfoService.findOne(productInfo);
             map.put("productInfo", productInfo);
         }
 
         //查询所有的类目
-        List<ProductCategory> productCategoryList = productCategoryService.findAll();
+        List<ProductCategoryDTO> productCategoryList = productCategoryService.findAll();
         map.put("categoryList", productCategoryList);
 
         return new ModelAndView("product/index", map);
@@ -105,10 +112,12 @@ public class SellerProductController {
 
             return new ModelAndView("commont/error", map);
         }
-        ProductInfo productInfo = new ProductInfo();
+        ProductInfoDTO productInfoDTO = new ProductInfoDTO();
         try {
+            ProductInfo productInfo=new ProductInfo();
             if (!StringUtils.isEmpty(productForm.getProductId())) {
-                productInfo = productInfoService.findOne(productForm.getProductId());
+                productInfo.setProductId(productForm.getProductId());
+                productInfoDTO = productInfoService.findOne(productInfo);
             } else {
                 productForm.setProductId(KeyUtil.genUniqueKey());
             }

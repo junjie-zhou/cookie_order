@@ -14,6 +14,7 @@ import com.cookie.pojo.OrderMaster;
 import com.cookie.pojo.ProductInfo;
 import com.cookie.service.*;
 import com.cookie.utils.KeyUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -125,10 +126,18 @@ public class OrderServerImpl implements OrderServer {
     }
 
 
-    public PageInfo<OrderDTO> findList( OrderMaster request) {
-        int pageNum = request.getPageNum();
-        PageHelper.startPage(pageNum, request.getPageSize());
-        PageInfo<OrderMasterDTO> orderMasterPage =new PageInfo<>(orderMasterRepository.getOrderMasterList(request));
+    public PageInfo<OrderDTO> findList(OrderMaster orderMaster, Page page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        PageInfo<OrderMasterDTO> orderMasterPage =new PageInfo<>(orderMasterRepository.getOrderMasterList(orderMaster));
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getList());
+        webSocket.sendMessage("测试数据");
+        return new PageInfo<>(orderDTOList);
+    }
+
+    @Override
+    public PageInfo<OrderDTO> findList(Page page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        PageInfo<OrderMasterDTO> orderMasterPage =new PageInfo<>(orderMasterRepository.getOrderMasterAllList());
         List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getList());
         webSocket.sendMessage("测试数据");
         return new PageInfo<>(orderDTOList);
