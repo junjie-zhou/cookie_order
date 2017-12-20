@@ -11,13 +11,14 @@
         <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
         <result column="order_status" property="orderStatus" jdbcType="TINYINT" />
         <result column="pay_status" property="payStatus" jdbcType="TINYINT" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
     order_id, buyer_name, buyer_phone, buyer_address, buyer_openid, order_amount, order_status,
-    pay_status, create_time, update_time
+    pay_status, DATE_FORMAT(create_time, '%Y-%m-%d %T') AS  create_time,
+        DATE_FORMAT(update_time, '%Y-%m-%d %T')  AS update_time
   </sql>
 
     <select id="getOrderMasterAllList"  resultMap="BaseResultMap">

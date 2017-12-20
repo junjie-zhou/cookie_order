@@ -7,17 +7,19 @@
         <result column="category_id" property="categoryId" jdbcType="INTEGER" />
         <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
         <result column="category_type" property="categoryType" jdbcType="INTEGER" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
     </resultMap>
 
 
     <sql id="Base_Column_List" >
-        category_id, category_name, category_type, create_time, update_time
+        category_id, category_name, category_type,
+        DATE_FORMAT(create_time, '%Y-%m-%d %T') AS  create_time,
+        DATE_FORMAT(update_time, '%Y-%m-%d %T')  AS update_time
     </sql>
 
     <select id="getAll" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
+        select   <include refid="Base_Column_List" />
         from `product_category`
     </select>
 
