@@ -14,7 +14,7 @@ spring:
 #  jackson: #配置controller返回值去掉null的数据 data;null 不会被返回到前台
 #    default-property-inclusion: non_null
 server:
-  context-path: /cookie
+  context-path: /sell
 #logging:
 #  pattern:
 #    console: "%d - %msg%n"
