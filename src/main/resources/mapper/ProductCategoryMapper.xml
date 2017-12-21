@@ -46,6 +46,18 @@
 
     <select id="findByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
+        FROM `product_category` WHERE 1=1
+        <if test="categoryType !=null">
+          AND  category_type = #{categoryType}
+        </if>
+        <if test="categoryId !=null">
+          AND  category_id = #{categoryId}
+        </if>
+
+    </select>
+
+    <select id="findByCategoryId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
+        SELECT <include refid="Base_Column_List" />
         FROM `product_category` WHERE category_type = #{categoryType}
     </select>
 
