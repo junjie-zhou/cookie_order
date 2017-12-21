@@ -25,20 +25,20 @@
                         </thead>
                         <tbody>
 
-                        <#list orderDTOPage.content as orderDTO>
+                        <#list orderDTOPage.getList() as orderDTO>
                         <tr>
-                            <td>${orderDTO.orderId}</td>
-                            <td>${orderDTO.buyerName}</td>
-                            <td>${orderDTO.buyerPhone}</td>
-                            <td>${orderDTO.buyerAddress}</td>
-                            <td>${orderDTO.orderAmount}</td>
-                            <td>${orderDTO.getOrderStatusEnum().message}</td>
-                            <td>${orderDTO.getPayStatusEnum().message}</td>
-                            <td>${orderDTO.createTime}</td>
-                            <td><a href="/sell/seller/order/detail?orderId=${orderDTO.orderId}&page=${currentPage}">详情</a></td>
+                            <td>${orderDTO.getOrderId()!}</td>
+                            <td>${orderDTO.getBuyerName()!}</td>
+                            <td>${orderDTO.getBuyerPhone()!}</td>
+                            <td>${orderDTO.getBuyerAddress()!}</td>
+                            <td>${orderDTO.getOrderAmount()!}</td>
+                            <td>${orderDTO.getOrderStatusEnum().message!}</td>
+                            <td>${orderDTO.getPayStatusEnum().message!}</td>
+                            <td>${orderDTO.getCreateTime()!}</td>
+                            <td><a href="/sell/seller/order/detail?orderId=${orderDTO.getOrderId()}&page=${currentPage}">详情</a></td>
                             <td>
                                 <#if orderDTO.getOrderStatusEnum().message == "新订单">
-                                    <a href="/sell/seller/order/cancel?orderId=${orderDTO.orderId}&page=${currentPage}&detail=0">取消</a>
+                                    <a href="/sell/seller/order/cancel?orderId=${orderDTO.getOrderId()}&page=${currentPage}&detail=0">取消</a>
                                 </#if>
                             </td>
                         </tr>
@@ -56,7 +56,7 @@
                         <li><a href="/sell/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
                     </#if>
 
-                    <#list 1..orderDTOPage.getTotalPages() as index>
+                    <#list 1..orderDTOPage.getTotal() as index>
                         <#if currentPage == index>
                             <li class="disabled"><a href="#">${index}</a></li>
                         <#else>
@@ -64,7 +64,7 @@
                         </#if>
                     </#list>
 
-                    <#if currentPage gte orderDTOPage.getTotalPages()>
+                    <#if currentPage gte orderDTOPage.getTotal()>
                         <li class="disabled"><a href="#">下一页</a></li>
                     <#else>
                         <li><a href="/sell/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>

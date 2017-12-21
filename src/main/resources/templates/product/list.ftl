@@ -25,17 +25,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <#list productInfoPage.content as productInfo>
+                        <#list productInfoPage.getList() as productInfo>
                         <tr>
-                            <td>${productInfo.productId}</td>
-                            <td>${productInfo.productName}</td>
-                            <td><img height="100" width="100" src="${productInfo.productIcon}" alt=""></td>
-                            <td>${productInfo.productPrice}</td>
-                            <td>${productInfo.productStock}</td>
-                            <td>${productInfo.productDescription}</td>
-                            <td>${productInfo.categoryType}</td>
-                            <td>${productInfo.createTime}</td>
-                            <td>${productInfo.updateTime}</td>
+                            <td>${productInfo.productId!}</td>
+                            <td>${productInfo.productName!}</td>
+                            <td><img height="100" width="100" src="${productInfo.productIcon!}" alt=""></td>
+                            <td>${productInfo.productPrice!}</td>
+                            <td>${productInfo.productStock!}</td>
+                            <td>${productInfo.productDescription!}</td>
+                            <td>${productInfo.categoryType!}</td>
+                            <td>${productInfo.createTime!}</td>
+                            <td>${productInfo.updateTime!}</td>
                             <td><a href="/sell/seller/product/index?productId=${productInfo.productId}">修改</a></td>
                             <td>
                                 <#if productInfo.getProductStatusEnum().message == "在架">
@@ -58,7 +58,7 @@
                         <li><a href="/sell/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
                     </#if>
 
-                    <#list 1..productInfoPage.getTotalPages() as index>
+                    <#list 1..productInfoPage.getTotal() as index>
                         <#if currentPage == index>
                             <li class="disabled"><a href="#">${index}</a></li>
                         <#else>
@@ -66,7 +66,7 @@
                         </#if>
                     </#list>
 
-                    <#if currentPage gte productInfoPage.getTotalPages()>
+                    <#if currentPage gte productInfoPage.getTotal()>
                         <li class="disabled"><a href="#">下一页</a></li>
                     <#else>
                         <li><a href="/sell/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
