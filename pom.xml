@@ -102,6 +102,15 @@
 		</dependency>
 
 
+		<!--ConfigurationProperties  读取配置文件信息  begin  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!--ConfigurationProperties  读取配置文件信息  end   -->
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
