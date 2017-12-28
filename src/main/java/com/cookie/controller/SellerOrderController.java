@@ -130,7 +130,7 @@ public class SellerOrderController {
             log.error("[卖家端查看订单详情] 查询不到订单");
             map.put("msg", ResultEnum.ORDER_NOT_EXIST.getMessage());
             map.put("url", "/sell/seller/order/list");
-
+            System.out.println("[卖家端查看订单详情] 查询不到订单");
             return new ModelAndView("common/error", map);
         }
 

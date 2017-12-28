@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.Data;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 
@@ -37,10 +36,10 @@ public class OrderDTO {
     private Integer payStatus;
 
     @JsonSerialize(using = Date2LongSerializer.class)
-    private Date createTime;
+    private String createTime;
 
     @JsonSerialize(using = Date2LongSerializer.class)
-    private Date updateTime;
+    private String updateTime;
 
     private List<OrderDetailDTO> orderDetailList;
 
@@ -121,19 +120,19 @@ public class OrderDTO {
         this.payStatus = payStatus;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

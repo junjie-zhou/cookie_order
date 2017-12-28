@@ -27,13 +27,13 @@
 
                         <#list orderDTOPage.getList() as orderDTO>
                         <tr>
-                            <td>${orderDTO.getOrderId()!}</td>
-                            <td>${orderDTO.getBuyerName()!}</td>
-                            <td>${orderDTO.getBuyerPhone()!}</td>
-                            <td>${orderDTO.getBuyerAddress()!}</td>
-                            <td>${orderDTO.getOrderAmount()!}</td>
-                            <td>${orderDTO.getOrderStatusEnum().message!}</td>
-                            <td>${orderDTO.getPayStatusEnum().message!}</td>
+                            <td>${orderDTO.getOrderId()}</td>
+                            <td>${orderDTO.getBuyerName()}</td>
+                            <td>${orderDTO.getBuyerPhone()}</td>
+                            <td>${orderDTO.getBuyerAddress()}</td>
+                            <td>${orderDTO.getOrderAmount()}</td>
+                            <td>${orderDTO.getOrderStatusEnum().message}</td>
+                            <td>${orderDTO.getPayStatusEnum().message}</td>
                             <td>${orderDTO.getCreateTime()!}</td>
                             <td><a href="/sell/seller/order/detail?orderId=${orderDTO.getOrderId()}&page=${currentPage}">详情</a></td>
                             <td>
@@ -100,7 +100,7 @@
 </div>
 <#--播放音乐-->
 <audio id="notice" loop="loop">
-    <source src="/sell/mp3/song.mp3" type="audio/mpeg"/>
+    <source src="/sell/static/mp3/song.mp3" type="audio/mpeg"/>
 </audio>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
