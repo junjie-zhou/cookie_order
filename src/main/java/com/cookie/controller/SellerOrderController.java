@@ -21,9 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by myseital  on 2017/11/22.
- */
+
+
 @Controller
 @Slf4j
 @RequestMapping("/seller/order")
