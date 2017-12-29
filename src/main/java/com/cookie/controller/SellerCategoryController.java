@@ -85,7 +85,6 @@ public class SellerCategoryController {
         } catch (Exception e) {
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/category/list");
-            System.out.println(e.getMessage());
             return new ModelAndView("common/error", map);
         }
 
