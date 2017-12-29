@@ -143,4 +143,24 @@ public class SellerProductController {
 
         return new ModelAndView("common/success",map);
     }
+
+    @GetMapping("delete")
+    public ModelAndView delete(@RequestParam(value = "productId") String productId,
+                               Map<String, Object> map){
+
+        map.put("url", "/sell/seller/product/list");
+
+        try {
+            ProductInfo productInfo=new ProductInfo();
+            productInfo.setProductId(productId);
+            productInfoService.delete(productInfo);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+
+            return new ModelAndView("common/error", map);
+        }
+
+        return new ModelAndView("common/success",map);
+    }
+
 }

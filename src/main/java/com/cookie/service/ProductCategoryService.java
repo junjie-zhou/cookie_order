@@ -16,4 +16,6 @@ public interface ProductCategoryService {
     List<ProductCategoryDTO> findByCategoryTypeIn(List<ProductCategory> productCategory);
 
     ProductCategoryDTO save(ProductCategory productCategory);
+
+    void delete(ProductCategory productCategory);
 }

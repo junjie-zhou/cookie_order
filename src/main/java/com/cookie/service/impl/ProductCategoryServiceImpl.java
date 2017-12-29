@@ -59,4 +59,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategoryDTO productCategoryDTO = productCategoryMapper.findByCategoryType(productCategory);
         return productCategoryDTO;
     }
+
+    @Override
+    public void delete(ProductCategory productCategory) {
+        productCategory.setIsDelete(0);
+        productCategoryMapper.deleteByCategoryType(productCategory);
+    }
 }

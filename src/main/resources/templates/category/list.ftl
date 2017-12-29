@@ -17,7 +17,7 @@
                             <th>type</th>
                             <th>创建时间</th>
                             <th>修改时间</th>
-                            <th>操作</th>
+                            <th colspan="2">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,6 +29,7 @@
                             <td>${category.createTime!""}</td>
                             <td>${category.updateTime!""}</td>
                             <td><a href="/sell/seller/category/index?categoryId=${category.categoryId!""}">修改</a></td>
+                            <td><a href="/sell/seller/category/delete?categoryType=${category.categoryType!""}">删除</a></td>
                         </tr>
                         </#list>
                         </tbody>

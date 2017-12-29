@@ -11,6 +11,11 @@ import java.util.List;
 
 public interface ProductInfoService {
 
+    /**
+     * 查询单个
+     * @param productInfo
+     * @return
+     */
     ProductInfoDTO findOne(ProductInfo productInfo);
 
     /**
@@ -19,19 +24,49 @@ public interface ProductInfoService {
      */
     List<ProductInfoDTO> findUpAll();
 
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
     PageInfo<ProductInfoDTO> findAll(Page page);
 
+    /**
+     * 新增
+     * @param productInfo
+     * @return
+     */
     ProductInfoDTO save(ProductInfo productInfo);
 
-    //加库存
+    /**
+     * 加库存
+     * @param cartDTOList
+     */
     void increaseStock(List<CartDTO> cartDTOList);
 
-    //减库存
+    /**
+     * 减库存
+     * @param cartDTOList
+     */
     void decreaseStock(List<CartDTO> cartDTOList);
 
-    //上架
+    /**
+     * 上架
+     * @param productInfo
+     * @return ProductInfoDTO
+     */
     ProductInfoDTO onSale(ProductInfo productInfo);
 
-    //下架
+    /**
+     * 下架
+     * @param productInfo
+     * @return ProductInfoDTO
+     */
     ProductInfoDTO  offSale(ProductInfo productInfo);
+
+    /**
+     * 删除
+     * @param productInfo
+     */
+    void delete(ProductInfo productInfo);
 }

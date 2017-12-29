@@ -21,32 +21,33 @@
     <select id="getAll" resultMap="BaseResultMap">
         select   <include refid="Base_Column_List" />
         from `product_category`
+        where is_deleted = 1
     </select>
 
     <select id="selectByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
-         FROM `product_category` WHERE category_type = #{categoryType}
+         FROM `product_category` WHERE category_type = #{categoryType} AND is_deleted = 1
     </select>
 
 
     <insert id="insertByMap"  parameterType="com.cookie.pojo.ProductCategory" >
-         insert into product_category (category_name, category_type, create_time, update_time
+         insert into product_category (category_name, category_type, is_deleted, create_time, update_time
           )
-          values (#{categoryName}, #{categoryType}, #{createTime}, #{updateTime}
+          values (#{categoryName}, #{categoryType}, #{isDeleted}, #{createTime}, #{updateTime}
           )
     </insert>
 
 
     <insert id="insertByObject"  parameterType="com.cookie.pojo.ProductCategory" >
-        insert into product_category (category_name, category_type, create_time, update_time
+        insert into product_category (category_name, category_type, is_deleted, create_time, update_time
         )
-        values (#{categoryName}, #{categoryType}, #{createTime}, #{updateTime}
+        values (#{categoryName}, #{categoryType}, #{isDeleted}, #{createTime}, #{updateTime}
         )
     </insert>
 
     <select id="findByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
-        FROM `product_category` WHERE 1=1
+        FROM `product_category` WHERE 1=1 AND is_deleted = 1
         <if test="categoryType !=null">
           AND  category_type = #{categoryType}
         </if>
@@ -58,7 +59,8 @@
 
     <select id="findByCategoryId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductCategory">
         SELECT <include refid="Base_Column_List" />
-        FROM `product_category` WHERE category_type = #{categoryType}
+        FROM `product_category`
+        WHERE category_type = #{categoryType} AND is_deleted = 1
     </select>
 
     <update id="updateByCategoryType" parameterType="com.cookie.pojo.ProductCategory">
@@ -75,7 +77,9 @@
 
 
     <delete id="deleteByCategoryType" parameterType="com.cookie.pojo.ProductCategory">
-        delete from product_category where category_type = #{category_type}
+        update  product_category
+        set is_deleted=#{isDeleted}
+        where category_type = #{categoryType}
     </delete>
 
 

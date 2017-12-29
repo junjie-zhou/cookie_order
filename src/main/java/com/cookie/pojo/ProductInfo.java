@@ -31,6 +31,8 @@ public class ProductInfo {
 
     private Date updateTime;
 
+    private Integer isDeleted=1;
+
     public ProductInfo() {
     }
 
@@ -118,6 +120,14 @@ public class ProductInfo {
         this.categoryType = categoryType;
     }
 
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -133,4 +143,6 @@ public class ProductInfo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+
 }

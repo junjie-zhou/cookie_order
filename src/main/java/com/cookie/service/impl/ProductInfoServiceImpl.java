@@ -152,4 +152,27 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
         return productInfoDTO;
     }
+
+    /**
+     * 逻辑删除
+     * @param productInfo
+     */
+    @Override
+    @Transactional
+    public void delete(ProductInfo productInfo) {
+        ProductInfoDTO productInfoDTO= productInfoMapper.getProductInfoByProductId(productInfo);
+        if (productInfoDTO == null){
+            log.error("[商品下架] 查询商品失败 productInfo={}", productInfo);
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+        if(productInfoDTO.getProductStatus().equals(ProductStatus.DOWN)){
+            log.error("[商品下架] 商品状态错误 productInfo={}", productInfo);
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+
+        //设置isDeleted 逻辑删除
+        productInfo.setIsDeleted(0);
+        productInfoMapper.deleteProductInfoByProductId(productInfo);
+
+    }
 }

@@ -18,7 +18,10 @@ public class ProductCategory {
 
     private Date updateTime;
 
+    private Integer isDeleted=1;
+
     public ProductCategory() {
+
     }
 
     public ProductCategory( String categoryName, Integer categoryType, Date createTime, Date updateTime) {
@@ -26,6 +29,14 @@ public class ProductCategory {
         this.categoryType = categoryType;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public void setIsDelete(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Integer getIsDelete() {
+        return isDeleted;
     }
 
     public Integer getCategoryId() {

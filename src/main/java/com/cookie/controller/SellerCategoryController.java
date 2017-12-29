@@ -92,4 +92,22 @@ public class SellerCategoryController {
 
         return new ModelAndView("common/success",map);
     }
+
+    @GetMapping("/delete")
+    public ModelAndView delete(@RequestParam(value = "categoryType") Integer categoryType,
+                              Map<String, Object> map) {
+        map.put("url", "/sell/seller/category/list");
+
+        try {
+            ProductCategory productCategory=new ProductCategory();
+            productCategory.setCategoryType(categoryType);
+            productCategoryService.delete(productCategory);
+        } catch (Exception e) {
+            map.put("msg", e.getMessage());
+            return new ModelAndView("common/error", map);
+        }
+
+        return new ModelAndView("common/success",map);
+    }
+
 }

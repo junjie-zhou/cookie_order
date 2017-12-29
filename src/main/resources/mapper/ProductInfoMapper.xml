@@ -24,32 +24,33 @@
     <select id="getAll" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from product_info
+        where is_deleted=1
     </select>
 
     <select id="getUpAll" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from product_info
-        where product_status=0
+        where product_status=0 AND is_deleted=1
     </select>
 
     <select id="getProductInfoByProductId" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductInfo">
         select <include refid="Base_Column_List"/>
         from product_info
-        where product_id=#{productId}
+        where product_id=#{productId} AND is_deleted=1
     </select>
 
     <select id="getProductInfoListByCategoryType" resultMap="BaseResultMap" parameterType="com.cookie.pojo.ProductInfo" >
         select <include refid="Base_Column_List"/>
         from product_info
-        where category_type=#{categoryType}
+        where category_type=#{categoryType} AND is_deleted=1
     </select>
 
     <insert id="addProductInfo" parameterType="com.cookie.pojo.ProductInfo">
         insert into product_info (product_id, product_name, product_price, product_stock, 
-        product_description, product_icon, product_status, category_type,
+        product_description, product_icon, product_status, category_type,is_deleted
         create_time, update_time)
         values (#{productId}, #{productName}, #{productPrice}, #{productStock}, #{productDescription},
-        #{productIcon}, #{productStatus}, #{categoryType},  #{createTime}, #{updateTime})
+        #{productIcon}, #{productStatus}, #{categoryType}, #{isDeleted}, #{createTime}, #{updateTime})
     </insert>
     
     <update id="updateProductInfo" parameterType="com.cookie.pojo.ProductInfo">
@@ -87,7 +88,8 @@
     </update>
 
     <delete id="deleteProductInfoByProductId" parameterType="com.cookie.pojo.ProductInfo">
-        delete from product_info
+        update product_info
+        set is_deleted=#{isDeleted}
         where product_id=#{productId}
     </delete>
 
