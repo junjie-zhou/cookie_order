@@ -56,7 +56,7 @@
                         <li><a href="/sell/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
                     </#if>
 
-                    <#list 1..orderDTOPage.getTotal() as index>
+                    <#list 1..orderDTOPage.getPages() as index>
                         <#if currentPage == index>
                             <li class="disabled"><a href="#">${index}</a></li>
                         <#else>
@@ -64,7 +64,7 @@
                         </#if>
                     </#list>
 
-                    <#if currentPage gte orderDTOPage.getTotal()>
+                    <#if currentPage gte orderDTOPage.getPages()>
                         <li class="disabled"><a href="#">下一页</a></li>
                     <#else>
                         <li><a href="/sell/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
