@@ -20,7 +20,7 @@ public interface ProductCategoryMapper {
    ProductCategoryDTO findByCategoryType(ProductCategory  productCategory);
 
 
-
+   boolean updateByCategoryId(ProductCategory  productCategory);
 
    boolean insertByObject(ProductCategory productCategory);
 

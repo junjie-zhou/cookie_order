@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cookie.service.ProductInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,7 +53,15 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Override
     @Transactional
     public ProductInfoDTO save(ProductInfo productInfo) {
-        productInfoMapper.addProductInfo(productInfo);
+        System.out.println(productInfo.getCreateTime());
+        if(productInfo.getCreateTime() != null){
+            productInfo.setUpdateTime(new Date());
+            productInfoMapper.updateProductInfo(productInfo);
+        }else{
+            productInfo.setCreateTime(new Date());
+            productInfo.setUpdateTime(new Date());
+            productInfoMapper.addProductInfo(productInfo);
+        }
         ProductInfoDTO productInfoDTO = productInfoMapper.getProductInfoByProductId(productInfo);
         return productInfoDTO;
     }

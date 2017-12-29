@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +96,7 @@ public class SellerProductController {
             ProductInfo productInfo=new ProductInfo();
             productInfo.setProductId(productId);
             ProductInfoDTO productInfoDTO = productInfoService.findOne(productInfo);
-            map.put("productInfo", productInfo);
+            map.put("productInfo", productInfoDTO);
         }
 
         //查询所有的类目
@@ -110,29 +114,33 @@ public class SellerProductController {
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());
             map.put("url", "/sell/seller/product/index");
 
-            return new ModelAndView("commont/error", map);
+            return new ModelAndView("common/error", map);
         }
         ProductInfoDTO productInfoDTO = new ProductInfoDTO();
         try {
             ProductInfo productInfo=new ProductInfo();
+            Date date=null;
             if (!StringUtils.isEmpty(productForm.getProductId())) {
                 productInfo.setProductId(productForm.getProductId());
                 productInfoDTO = productInfoService.findOne(productInfo);
+                System.out.println(productInfoDTO.getCreateTime());
+                DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                date = fmt.parse(productInfoDTO.getCreateTime());
             } else {
                 productForm.setProductId(KeyUtil.genUniqueKey());
             }
 
-            BeanUtils.copyProperties(productForm, productInfo);
+            BeanUtils.copyProperties(productForm,productInfoDTO);
+            BeanUtils.copyProperties(  productInfoDTO,productInfo);
+            productInfo.setCreateTime(date);
             productInfoService.save(productInfo);
-        } catch (SellException e) {
+        } catch (Exception e) {
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/product/index");
-
-            return new ModelAndView("commont/error", map);
+            return new ModelAndView("common/error", map);
         }
-
         map.put("url", "/sell/seller/product/list");
 
-        return new ModelAndView("product/index");
+        return new ModelAndView("common/success",map);
     }
 }

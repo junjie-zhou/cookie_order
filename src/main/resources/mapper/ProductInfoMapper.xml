@@ -11,13 +11,14 @@
         <result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
         <result column="product_status" property="productStatus" jdbcType="TINYINT" />
         <result column="category_type" property="categoryType" jdbcType="INTEGER" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
         product_id, product_name, product_price, product_stock, product_description, product_icon,
-        product_status, category_type, create_time, update_time
+        product_status, category_type, DATE_FORMAT(create_time, '%Y-%m-%d %T') AS  create_time,
+        DATE_FORMAT(update_time, '%Y-%m-%d %T')  AS update_time
     </sql>
 
     <select id="getAll" resultMap="BaseResultMap">

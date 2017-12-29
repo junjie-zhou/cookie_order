@@ -20,7 +20,7 @@ public class SellerInfoDTO {
 
     private String openid;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date updateTime;
+    private String updateTime;
 }

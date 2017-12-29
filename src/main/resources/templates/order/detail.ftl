@@ -18,8 +18,8 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>${orderDTO.orderId}</td>
-                            <td>${orderDTO.orderAmount}</td>
+                            <td>${orderDTO.orderId!""}</td>
+                            <td>${orderDTO.orderAmount!""}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -39,11 +39,11 @@
                         <tbody>
                         <#list orderDTO.orderDetailList as orderDetail>
                         <tr>
-                            <td>${orderDetail.productId}</td>
-                            <td>${orderDetail.productName}</td>
-                            <td>${orderDetail.productPrice}</td>
-                            <td>${orderDetail.productQuantity}</td>
-                            <td>${orderDetail.productQuantity * orderDetail.productPrice}</td>
+                            <td>${orderDetail.productId!""}</td>
+                            <td>${orderDetail.productName!""}</td>
+                            <td>${orderDetail.productPrice!""}</td>
+                            <td>${orderDetail.productQuantity!""}</td>
+                            <td>${orderDetail.productQuantity * orderDetail.productPrice!""}</td>
                         </tr>
                         </#list>
                         </tbody>

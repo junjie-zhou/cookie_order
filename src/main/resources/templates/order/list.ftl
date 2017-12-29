@@ -27,18 +27,18 @@
 
                         <#list orderDTOPage.getList() as orderDTO>
                         <tr>
-                            <td>${orderDTO.getOrderId()}</td>
-                            <td>${orderDTO.getBuyerName()}</td>
-                            <td>${orderDTO.getBuyerPhone()}</td>
-                            <td>${orderDTO.getBuyerAddress()}</td>
-                            <td>${orderDTO.getOrderAmount()}</td>
-                            <td>${orderDTO.getOrderStatusEnum().message}</td>
-                            <td>${orderDTO.getPayStatusEnum().message}</td>
-                            <td>${orderDTO.getCreateTime()!}</td>
-                            <td><a href="/sell/seller/order/detail?orderId=${orderDTO.getOrderId()}&page=${currentPage}">详情</a></td>
+                            <td>${orderDTO.getOrderId()!""}</td>
+                            <td>${orderDTO.getBuyerName()!""}</td>
+                            <td>${orderDTO.getBuyerPhone()!""}</td>
+                            <td>${orderDTO.getBuyerAddress()!""}</td>
+                            <td>${orderDTO.getOrderAmount()!""}</td>
+                            <td>${orderDTO.getOrderStatusEnum().message!""}</td>
+                            <td>${orderDTO.getPayStatusEnum().message!""}</td>
+                            <td>${orderDTO.getCreateTime()!""}</td>
+                            <td><a href="/sell/seller/order/detail?orderId=${orderDTO.getOrderId()!""}&page=${currentPage}">详情</a></td>
                             <td>
                                 <#if orderDTO.getOrderStatusEnum().message == "新订单">
-                                    <a href="/sell/seller/order/cancel?orderId=${orderDTO.getOrderId()}&page=${currentPage}&detail=0">取消</a>
+                                    <a href="/sell/seller/order/cancel?orderId=${orderDTO.getOrderId()!""}&page=${currentPage}&detail=0">取消</a>
                                 </#if>
                             </td>
                         </tr>

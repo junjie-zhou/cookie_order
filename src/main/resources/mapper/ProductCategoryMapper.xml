@@ -67,6 +67,13 @@
           where category_type = #{categoryType}
     </update>
 
+    <update id="updateByCategoryId" parameterType="com.cookie.pojo.ProductCategory">
+        update product_category
+        set category_name = #{categoryName},category_type = #{categoryType},update_time=#{updateTime}
+        where category_id = #{categoryId}
+    </update>
+
+
     <delete id="deleteByCategoryType" parameterType="com.cookie.pojo.ProductCategory">
         delete from product_category where category_type = #{category_type}
     </delete>

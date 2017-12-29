@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +47,15 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategoryDTO save(ProductCategory productCategory) {
-        productCategoryMapper.insertByObject(productCategory);
+        System.out.println(productCategory.getCreateTime());
+        if(!StringUtils.isEmpty(productCategory.getCreateTime())){
+            productCategory.setUpdateTime(new Date());
+            productCategoryMapper.updateByCategoryId(productCategory);
+        }else {
+            productCategory.setCreateTime(new Date());
+            productCategory.setUpdateTime(new Date());
+            productCategoryMapper.insertByObject(productCategory);
+        }
         ProductCategoryDTO productCategoryDTO = productCategoryMapper.findByCategoryType(productCategory);
         return productCategoryDTO;
     }

@@ -112,8 +112,9 @@ public class OrderServerImpl implements OrderServer {
         if (orderMaster == null) {
             throw  new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
-
-        List<OrderDetailDTO> orderDetailList = orderDetailRepository.findByOrderId(new OrderDetail(orderMaste.getOrderId()));
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrderId(orderMaste.getOrderId());
+        List<OrderDetailDTO> orderDetailList = orderDetailRepository.findByOrderId(orderDetail);
         if (CollectionUtils.isEmpty(orderDetailList)) {
             throw  new SellException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
         }

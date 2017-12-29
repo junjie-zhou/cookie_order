@@ -5,6 +5,7 @@ import com.cookie.exception.SellException;
 import com.cookie.form.CategoryForm;
 import com.cookie.pojo.ProductCategory;
 import com.cookie.service.ProductCategoryService;
+import com.cookie.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -59,29 +63,34 @@ public class SellerCategoryController {
                              Map<String, Object> map) {
         if (bindingResult.hasErrors()) {
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());
-            map.put("url", "/sell/seller/category/index");
-
-            return new ModelAndView("commont/error", map);
+            map.put("url", "/sell/seller/category/list");
+            return new ModelAndView("common/error", map);
         }
 
-        ProductCategoryDTO productCategoryDTO = new ProductCategoryDTO();
-        ProductCategory productCategory=null;
         try {
+            ProductCategoryDTO productCategoryDTO = new ProductCategoryDTO();
+            ProductCategory productCategory=new ProductCategory();
+            Date date=null;
             if (!StringUtils.isEmpty(categoryForm.getCategoryId())) {
                 productCategory=new ProductCategory();
                 productCategory.setCategoryId(categoryForm.getCategoryId());
                 productCategoryDTO = productCategoryService.findOne(productCategory);
+                DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                date = fmt.parse(productCategoryDTO.getCreateTime());
             }
-
             BeanUtils.copyProperties(categoryForm, productCategoryDTO);
             BeanUtils.copyProperties(productCategoryDTO, productCategory);
+            productCategory.setCreateTime(date);
             productCategoryService.save(productCategory);
-        } catch (SellException e) {
+        } catch (Exception e) {
             map.put("msg", e.getMessage());
-            map.put("url", "/sell/seller/category/index");
-
-            return new ModelAndView("commont/error", map);
+            map.put("url", "/sell/seller/category/list");
+            System.out.println(e.getMessage());
+            return new ModelAndView("common/error", map);
         }
-        return new ModelAndView("category/index", map);
+
+        map.put("url", "/sell/seller/category/list");
+
+        return new ModelAndView("common/success",map);
     }
 }
