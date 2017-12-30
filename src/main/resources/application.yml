@@ -38,3 +38,14 @@ logging:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
+#FTP相关配置
+FTP:
+  url: 192.168.163.129
+  port: 21
+  userName: ftpuser
+  passWord: 19950828
+  basePath: /home/ftpuser/images
+
+#图片服务器基础URL
+nginx:
+  url: http://192.168.163.129

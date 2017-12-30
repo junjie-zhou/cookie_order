@@ -47,7 +47,7 @@
 
     <insert id="addProductInfo" parameterType="com.cookie.pojo.ProductInfo">
         insert into product_info (product_id, product_name, product_price, product_stock, 
-        product_description, product_icon, product_status, category_type,is_deleted
+        product_description, product_icon, product_status, category_type,is_deleted,
         create_time, update_time)
         values (#{productId}, #{productName}, #{productPrice}, #{productStock}, #{productDescription},
         #{productIcon}, #{productStatus}, #{categoryType}, #{isDeleted}, #{createTime}, #{updateTime})

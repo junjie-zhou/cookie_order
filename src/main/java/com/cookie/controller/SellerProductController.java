@@ -6,20 +6,28 @@ import com.cookie.exception.SellException;
 import com.cookie.form.ProductForm;
 import com.cookie.pojo.ProductInfo;
 import com.cookie.service.ProductCategoryService;
+import com.cookie.service.ProductIcomService;
 import com.cookie.service.ProductInfoService;
 import com.cookie.utils.KeyUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +49,9 @@ public class SellerProductController {
 
     @Autowired
     private ProductCategoryService productCategoryService;
+
+    @Autowired
+    private ProductIcomService productIcomService;
 
     @GetMapping("/list")
     public ModelAndView List(@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -123,7 +134,6 @@ public class SellerProductController {
             if (!StringUtils.isEmpty(productForm.getProductId())) {
                 productInfo.setProductId(productForm.getProductId());
                 productInfoDTO = productInfoService.findOne(productInfo);
-                System.out.println(productInfoDTO.getCreateTime());
                 DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 date = fmt.parse(productInfoDTO.getCreateTime());
             } else {
@@ -131,7 +141,7 @@ public class SellerProductController {
             }
 
             BeanUtils.copyProperties(productForm,productInfoDTO);
-            BeanUtils.copyProperties(  productInfoDTO,productInfo);
+            BeanUtils.copyProperties(productInfoDTO,productInfo);
             productInfo.setCreateTime(date);
             productInfoService.save(productInfo);
         } catch (Exception e) {
@@ -144,7 +154,7 @@ public class SellerProductController {
         return new ModelAndView("common/success",map);
     }
 
-    @GetMapping("delete")
+    @GetMapping("/delete")
     public ModelAndView delete(@RequestParam(value = "productId") String productId,
                                Map<String, Object> map){
 
@@ -161,6 +171,29 @@ public class SellerProductController {
         }
 
         return new ModelAndView("common/success",map);
+    }
+
+    /**
+     * 使用Ajax异步上传图片
+     *
+     * @param productIconUp 封装图片对象
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws IllegalStateException
+     */
+    @PostMapping("/uploadPic")
+    public void uploadPic(MultipartFile productIconUp, HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
+
+        if(!StringUtils.isEmpty(productIconUp)) {
+            // 将相对路径写回（json格式）
+            Map<String, Object> map=productIcomService.uploadPicture(productIconUp);
+            // 设置响应数据的类型json
+            response.setContentType("application/json; charset=utf-8");
+            // 写回
+            response.getWriter().write(new Gson().toJson(map));
+
+        }
     }
 
 }

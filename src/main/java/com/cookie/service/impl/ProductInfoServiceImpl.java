@@ -53,7 +53,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Override
     @Transactional
     public ProductInfoDTO save(ProductInfo productInfo) {
-        System.out.println(productInfo.getCreateTime());
         if(productInfo.getCreateTime() != null){
             productInfo.setUpdateTime(new Date());
             productInfoMapper.updateProductInfo(productInfo);
@@ -162,11 +161,11 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     public void delete(ProductInfo productInfo) {
         ProductInfoDTO productInfoDTO= productInfoMapper.getProductInfoByProductId(productInfo);
         if (productInfoDTO == null){
-            log.error("[商品下架] 查询商品失败 productInfo={}", productInfo);
+            log.error("[商品删除] 查询商品失败 productInfo={}", productInfo);
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
         if(productInfoDTO.getProductStatus().equals(ProductStatus.DOWN)){
-            log.error("[商品下架] 商品状态错误 productInfo={}", productInfo);
+            log.error("[商品删除] 商品状态错误 productInfo={}", productInfo);
             throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
         }
 
