@@ -9,6 +9,8 @@ spring:
   redis:
      host: 106.14.161.16
      port: 6379
+     cacheExpiration: 30 #redis缓存刷新时间(s)
+
 #  jackson: #配置controller返回值去掉null的数据 data;null 不会被返回到前台
 #    default-property-inclusion: non_null
 server:
@@ -40,12 +42,12 @@ mybatis:
 
 #FTP相关配置
 FTP:
-  url: 192.168.163.129
+  host: 192.168.163.129
   port: 21
   userName: ftpuser
   passWord: 19950828
   basePath: /home/ftpuser/images
 
-#图片服务器基础URL
+#nginx图片服务器基础URL
 nginx:
   url: http://192.168.163.129

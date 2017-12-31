@@ -17,7 +17,7 @@ public class FTPConfig {
     /**
      * FTP的IP地址
      */
-    private String url;
+    private String host;
 
     /**
      * FTP的端口地址
@@ -42,7 +42,7 @@ public class FTPConfig {
     @Override
     public String toString() {
         return "FTPConfig{" +
-                "url='" + url + '\'' +
+                "url='" + host + '\'' +
                 ", port=" + port +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +

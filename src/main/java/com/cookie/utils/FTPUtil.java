@@ -33,7 +33,7 @@ public class FTPUtil {
 		try {
 			int reply;
 			// 连接FTP服务器
-			ftp.connect(ftpConfig.getUrl(), ftpConfig.getPort());
+			ftp.connect(ftpConfig.getHost(), ftpConfig.getPort());
 			// 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
 			// 登录
 			ftp.login(ftpConfig.getUserName(), ftpConfig.getPassWord());
@@ -95,7 +95,7 @@ public class FTPUtil {
 		FTPClient ftp = new FTPClient();
 		try {
 			int reply;
-			ftp.connect(ftpConfig.getUrl(), ftpConfig.getPort());
+			ftp.connect(ftpConfig.getHost(), ftpConfig.getPort());
 			// 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
 			// 登录
 			ftp.login(ftpConfig.getUserName(), ftpConfig.getPassWord());
